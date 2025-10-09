@@ -16,6 +16,7 @@ import MdiCog from "~icons/mdi/cog";
 
 import MobileDayTimetable from "~/components/timetable/relative-day";
 import FixedHeightDayTimetable from "~/components/timetable/fixed-height-day"
+import MdiTableEye from '~icons/mdi/table-eye'
 
 import {
   getWidgetContent,
@@ -41,6 +42,7 @@ import { type SwiperContainer, register as registerSwiperElements } from "swiper
 import type Swiper from "swiper";
 import { TIMETABLE_HOURS } from "~/utils/hours";
 import { textColorOnCustomBackground } from "~/utils/colors";
+import { A } from "@solidjs/router";
 registerSwiperElements();
 
 // Type elements from Swiper Element.
@@ -247,14 +249,18 @@ const SwiperView: Component<{
         style={{ color: textColorOnBG() }}
       >
         <div class="flex flex-col">
-          <p class="text-lg sm:text-xl font-medium">
+          <p class="text-base sm:text-xl font-medium">
             {getGreeting()}
           </p>
-          <p class="text-sm opacity-80">
+          <p class="text-xs sm:text-sm opacity-80">
             Vous êtes en G{preferences.main_group}{preferences.sub_group === 0 ? "A" : "B"}.
           </p>
         </div>
         <div class="flex gap-2">
+          <A href="/rooms" class="flex items-center justify-center p-2">
+            <MdiTableEye class="text-lg" />
+          </A>
+
           <Show when={props.header && typeof props.lessons !== "undefined"}>
             <a
               href={`https://edt-iut-info.unilim.fr/edt/A${preferences.year}/A${preferences.year}_S${props.header!.week_number}.pdf`}

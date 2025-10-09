@@ -6,6 +6,8 @@ import { ITimetableLesson } from "~/types/api";
 import { APIError, APIErrorType } from "~/utils/errors";
 import { getLessonGroup } from "~/utils/lessons";
 import MdiCheck from '~icons/mdi/check'
+import MdiArrowLeft from '~icons/mdi/arrow-left'
+import { A } from "@solidjs/router";
 
 const Page: Component = () => {
   // Signals for week numbers. We use `-1` as a default value, that should be handled as a loading state.
@@ -266,7 +268,14 @@ const Page: Component = () => {
 
   return (
     <main class="p-8">
+
       <div class="flex flex-col gap-8 max-w-895px w-full mx-auto">
+        <A href="/" class="flex items-center gap-2 text-sm hover:bg-[rgb(27,27,27)] w-fit -ml-4 px-4 py-2.5 rd-lg">
+          <MdiArrowLeft /> Revenir à l'emploi du temps
+        </A>
+
+        <hr class="border-[rgb(80,80,80)]" />
+
         <Floor label="Rez-de-chaussée" layout="rdc" />
         <Floor label="1er Étage" layout="roof1" />
         <Floor label="2ème Étage" layout="roof2" />

@@ -69,12 +69,12 @@ export const getGreeting = () => {
   const hour = n.hour;
   const mins = n.minute;
 
-  if (hour > 5 && hour <= 7) return "Bonjour !";
-  else if (hour > 7 && hour <= 11) return "Bonne matinée !";
-  else if (hour > 11 && (hour <= 13 && mins <= 30)) return "Bon appétit !";
-  else if (((hour == 13 && mins >=30) || (hour > 13)) && hour <= 17) return "Bon après-midi !";
-  else if (hour > 17 && hour <= 22) return "Bonsoir !";
-  else if (hour > 22 || hour <= 5) return "Bonne nuit !";
+  if (hour > 5 && hour <= 7) return "Bonjour";
+  else if (hour > 7 && hour <= 11) return "Bonne matinée";
+  else if (hour > 11 && (hour <= 13 && mins <= 30)) return "Bon appétit";
+  else if (((hour == 13 && mins >=30) || (hour > 13)) && hour <= 17) return "Bon après-midi";
+  else if (hour > 17 && hour <= 22) return "Bonsoir";
+  else if (hour > 22 || hour <= 5) return "Bonne nuit";
 };
 
 /**

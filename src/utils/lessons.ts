@@ -1,4 +1,4 @@
-import type { TimetableLessonCM, TimetableLessonDS, TimetableLessonOTHER, TimetableLessonSAE, TimetableLessonTD, TimetableLessonTP } from "unilim/iut/cs/timetable";
+import { SUBGROUPS, type TimetableLessonCM, type TimetableLessonDS, type TimetableLessonOTHER, type TimetableLessonSAE, type TimetableLessonTD, type TimetableLessonTP } from "unilim/iut/cs/timetable";
 import type { ITimetable, ITimetableLesson } from "~/types/api";
 
 export const lessonsForSubGroup = (timetable: Omit<ITimetable, "last_update">, preferences: {
@@ -128,7 +128,7 @@ export const makeLessonUniqueID = (lesson: ITimetableLesson): string => (
 export const getLessonGroup = (lesson: ITimetableLesson, year: number): string => {
   switch (lesson.type) {
     case "TP":
-      return `G${lesson.group.main}${lesson.group.sub === 1 ? "A" : "B"}`;
+      return `G${lesson.group.main}${lesson.group.sub === SUBGROUPS.A ? "A" : "B"}`;
 
     case "TD":
     case "DS":
@@ -137,7 +137,7 @@ export const getLessonGroup = (lesson: ITimetableLesson, year: number): string =
         return `A${year}`;
       }
       else if (lesson.type === "SAE" && typeof lesson.group.sub !== "undefined") {
-        return `G${lesson.group.main}${lesson.group.sub === 1 ? "A" : "B"}`;
+        return `G${lesson.group.main}${lesson.group.sub === SUBGROUPS.A ? "A" : "B"}`;
       }
       else {
         return `G${lesson.group.main}`;

@@ -11,6 +11,7 @@ export default defineConfig({
     },
 
     breakpoints: {
+      sm: "436px",
       tablet: "768px",
       "laptop-sm": "1024px",
       "laptop-lg": "1440px",

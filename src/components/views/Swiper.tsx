@@ -247,10 +247,10 @@ const SwiperView: Component<{
         style={{ color: textColorOnBG() }}
       >
         <div class="flex flex-col">
-          <p class="text-xl font-medium">
+          <p class="text-lg sm:text-xl font-medium">
             {getGreeting()}
           </p>
-          <p class="text-sm">
+          <p class="text-sm opacity-80">
             Vous êtes en G{preferences.main_group}{preferences.sub_group === 0 ? "A" : "B"}.
           </p>
         </div>

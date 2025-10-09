@@ -548,11 +548,11 @@ const SwiperView: Component<{
 
       <footer class="w-full text-center pb-8 pt-6 text-[rgb(220,220,220)]">
         <p class="text-sm flex gap-1 justify-center items-center">
-          Made with <MdiHeart class="text-red" /> by <a class="font-medium hover:underline text-red" href="https://github.com/Vexcited">Vexcited</a>
+          Réalisé avec <MdiHeart class="text-red" /> par <a class="font-medium hover:underline text-red" href="https://github.com/Vexcited">Mikkel</a>
         </p>
 
-        <a href={`https://github.com/Vexcited/WebLimogesTimetableIUTCS/tree/${__APP_COMMIT_SHA__=== "dev" ? "main" : __APP_COMMIT_SHA__}`} class="text-xs pt-1 text-red/80 hover:(underline text-red)">
-          {__APP_COMMIT_SHA__ === "dev" ? "development version" :__APP_COMMIT_SHA__}
+        <a href={`https://github.com/Vexcited/WebLimogesTimetableIUTCS/tree/${__APP_COMMIT_SHA__ === "dev" ? "main" : __APP_COMMIT_SHA__}`} class="text-xs pt-1 text-red/80 hover:(underline text-red)">
+          SHA:{__APP_COMMIT_SHA__}
         </a>
       </footer>
     </>

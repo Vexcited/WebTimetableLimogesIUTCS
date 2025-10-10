@@ -34,7 +34,6 @@ const Page: Component = () => {
       "105",
       "112",
       "111",
-      "110",
       "109",
       "108"
     ],
@@ -65,7 +64,6 @@ const Page: Component = () => {
       "105": [], // +> 14 computer seats
       "112": [], // +> 14 computer seats
       "111": [], // +> 14 computer seats
-      "110": [],
       "109": [], // +> 8 computer seats
       "108": [], // +> 8 computer seats
 
@@ -228,7 +226,7 @@ const Page: Component = () => {
     }
 
     return (
-      <div class="flex flex-col justify-between sm:max-w-170px h-105px w-full rd-lg px-4 py-3"
+      <div class="flex flex-col justify-between sm:max-w-170px h-130px w-full rd-lg px-4 py-3"
         classList={{
           "border border-red bg-red/5": !props.lesson,
           "border border-[rgb(140,140,140)] opacity-75": !!props.lesson
@@ -268,7 +266,7 @@ const Page: Component = () => {
   );
 
   return (
-    <main class="p-8">
+    <main class="p-8 text-white">
 
       <div class="flex flex-col gap-8 max-w-895px w-full mx-auto">
         <A href="/" class="flex items-center gap-2 text-sm hover:bg-[rgb(27,27,27)] w-fit -ml-4 px-4 py-2.5 rd-lg">

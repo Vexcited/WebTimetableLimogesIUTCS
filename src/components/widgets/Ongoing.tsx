@@ -6,6 +6,7 @@ import { getLessonContentType } from "~/utils/lessons";
 import { textColorOnBG } from "~/stores/preferences";
 import { now } from "~/stores/temporary";
 import { getRelativeRemainingTime } from "~/utils/dates";
+import { shortToFullTeacherName } from "~/utils/teachers";
 
 // When we're actually in a lesson, we also get the content of next lesson for preview.
 export interface IOngoingWidget {
@@ -42,7 +43,7 @@ const OngoingWidget: Component<IOngoingWidget> = (props) => {
           </div>
 
           <p class="text-xs text-[rgb(190,190,190)]">
-            {props.lesson.type} avec {props.lesson.content.teacher}
+            {props.lesson.type} avec {shortToFullTeacherName(props.lesson.content.teacher)?.name ?? props.lesson.content.teacher}
           </p>
         </div>
 
@@ -67,7 +68,7 @@ const OngoingWidget: Component<IOngoingWidget> = (props) => {
               </div>
 
               <p class="text-xs text-[rgb(190,190,190)]">
-                {next_lesson().type} avec {next_lesson().content.teacher}
+                {next_lesson().type} avec {shortToFullTeacherName(next_lesson().content.teacher)?.name ?? next_lesson().content.teacher}
               </p>
             </div>
 

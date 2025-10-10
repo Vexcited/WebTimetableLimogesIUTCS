@@ -3,6 +3,7 @@ import type { ITimetable } from "~/types/api";
 import { preferences } from "~/stores/preferences";
 import { TimetableLessonCM, TimetableLessonOTHER, TimetableLessonSAE, TimetableLessonTD, TimetableLessonTP, TimetableLessonDS } from "unilim/iut/cs/timetable";
 import { lessonsForSubGroup } from "./lessons";
+import { shortToFullTeacherName } from "./teachers";
 
 export const generateICS = (timetable: Omit<ITimetable, "last_update">): void => {
   const lessons = lessonsForSubGroup(timetable, {
@@ -20,7 +21,7 @@ export const generateICS = (timetable: Omit<ITimetable, "last_update">): void =>
       title: lesson.type + " - " + ((lesson as TimetableLessonCM | TimetableLessonSAE | TimetableLessonTD | TimetableLessonTP | TimetableLessonDS).content.type ?? "??") + " - " + content,
       description: `
 ${content}
-Avec ${lesson.content.teacher} en salle ${lesson.content.room}.
+Avec ${shortToFullTeacherName(lesson.content.teacher)?.name ?? lesson.content.teacher} en salle ${lesson.content.room}.
       `.trim(),
 
       start: [start.getFullYear(), start.getMonth() + 1, start.getDate(), start.getHours(), start.getMinutes()],

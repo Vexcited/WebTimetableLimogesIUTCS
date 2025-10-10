@@ -8,6 +8,7 @@ import MdiTimerSandFull from '~icons/mdi/timer-sand-full';
 import { setLessonModalData } from "../modals/Lesson";
 import { textColorOnBG } from "~/stores/preferences";
 import { now } from "~/stores/temporary";
+import { shortToFullTeacherName } from "~/utils/teachers";
 
 const MobileDayTimetableLesson: Component<{
   lesson: ITimetableLesson;
@@ -90,7 +91,7 @@ const MobileDayTimetableLesson: Component<{
           </div>
 
           <p class="text-sm text-[rgb(190,190,190)]">
-            {getLessonDescription(props.lesson)} avec {props.lesson.content.teacher}
+            {getLessonDescription(props.lesson)} avec {shortToFullTeacherName(props.lesson.content.teacher)?.name ?? props.lesson.content.teacher}
           </p>
         </div>
       </button>

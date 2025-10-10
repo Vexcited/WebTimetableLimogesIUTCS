@@ -5,6 +5,7 @@ import { Modal } from "~/components/modals";
 import { getPersonalNotesForID, setPersonalNotesForID } from "~/stores/notes";
 import { ITimetableLesson } from "~/types/api";
 import { getLessonDescription, getLessonContentType, getFullLessonContentType, makeLessonUniqueID } from "~/utils/lessons";
+import { shortToFullTeacherName } from "~/utils/teachers";
 
 import MdiClock from '~icons/mdi/clock'
 import MdiInformation from '~icons/mdi/information'
@@ -13,14 +14,20 @@ import MdiTextBoxEdit from '~icons/mdi/text-box-edit'
 const [lessonModalData, setLessonModalData] = createSignal<ITimetableLesson | null>(null);
 export { setLessonModalData };
 
-const Field: Component<{ title: string, value: string }> = (props) => (
+const Field: Component<{ title: string, value: string, valueHref?: string }> = (props) => (
   <div class="flex items-center gap-4 justify-between py-3 px-5">
     <p class="text-[rgb(210,210,210)]">
       {props.title}
     </p>
-    <p class="text-[rgb(230,230,230)] truncate">
-      {props.value}
-    </p>
+    <Show when={props.valueHref} fallback={
+      <p class="text-[rgb(230,230,230)] truncate">
+        {props.value}
+      </p>
+    }>
+      <a href={props.valueHref} class="text-[rgb(230,230,230)] border-[rgb(220,220,220)] truncate border-b hover:border-white">
+        {props.value}
+      </a>
+    </Show>
   </div>
 );
 
@@ -28,6 +35,7 @@ const LessonModal: Component = () => {
   const startDate = createMemo(() => DateTime.fromISO(lessonModalData()?.start_date ?? "").setLocale("fr-FR"));
   const endDate = createMemo(() => DateTime.fromISO(lessonModalData()?.end_date ?? "").setLocale("fr-FR"));
   const lessonID = createMemo(() => lessonModalData() ? makeLessonUniqueID(lessonModalData()!) : null);
+  const teacher = createMemo(() => lessonModalData() ? shortToFullTeacherName(lessonModalData()!.content.teacher) : null)
 
   return (
     <Modal
@@ -69,7 +77,8 @@ const LessonModal: Component = () => {
                   />
                   <Field
                     title="Enseignant(e)"
-                    value={lesson().content.teacher}
+                    value={teacher()?.name || lesson().content.teacher}
+                    valueHref={teacher() ? "mailto:" + teacher()!.email : void 0}
                   />
                   <Field
                     title="Salle"

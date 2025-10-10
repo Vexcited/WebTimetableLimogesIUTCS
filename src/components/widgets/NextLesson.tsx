@@ -10,6 +10,7 @@ import {
 import { getHourString, getRelativeRemainingTime } from "~/utils/dates";
 import { textColorOnBG } from "~/stores/preferences";
 import { now } from "~/stores/temporary";
+import { shortToFullTeacherName } from "~/utils/teachers";
 
 // When it's first lesson of the day.
 export interface INextLessonWidget {
@@ -41,7 +42,7 @@ const NextLessonWidget: Component<INextLessonWidget> = (props) => {
         </div>
 
         <p class="text-sm text-[rgb(225,225,225)]">
-          {getLessonDescription(props.lesson)} avec {props.lesson.content.teacher}
+          {getLessonDescription(props.lesson)} avec {shortToFullTeacherName(props.lesson.content.teacher)?.name ?? props.lesson.content.teacher}
         </p>
 
         <p class="text-xs text-[rgb(200,200,200)] ">

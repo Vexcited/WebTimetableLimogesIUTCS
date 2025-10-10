@@ -9,6 +9,7 @@ import {
   getLessonDescription,
   getLessonContentType
 } from "~/utils/lessons";
+import { shortToFullTeacherName } from "~/utils/teachers";
 
 // When the day is over.
 export interface IDoneForTodayWidget {
@@ -39,7 +40,7 @@ const NextLessonPreview: Component<{
       <div class="my-2 h-[1px] border-b border-b-[rgb(50,50,50)]" />
 
       <p class="text-xs px-4 tablet:text-sm text-[rgb(240,240,240)]">
-        Prochain: {props.next_lesson.type} de <span class="text-red font-medium">{getLessonContentType(props.next_lesson)}</span> ({getLessonDescription(props.next_lesson)}) en <span class="text-red font-medium">{props.next_lesson.content.room}</span> avec {props.next_lesson.content.teacher}
+        Prochain: {props.next_lesson.type} de <span class="text-red font-medium">{getLessonContentType(props.next_lesson)}</span> ({getLessonDescription(props.next_lesson)}) en <span class="text-red font-medium">{props.next_lesson.content.room}</span> avec {shortToFullTeacherName(props.next_lesson.content.teacher)?.name ?? props.next_lesson.content.teacher}
       </p>
     </>
   );
@@ -54,7 +55,7 @@ const DoneForTodayWidget: Component<IDoneForTodayWidget> = (props) => {
           Les cours d'aujourd'hui sont terminés
         </p>
       </div>
-      
+
       <Show when={props.next_lesson}
         fallback={
           <div class="flex items-center gap-2 px-4">

@@ -8,6 +8,7 @@ import { getLessonGroup } from "~/utils/lessons";
 import MdiCheck from '~icons/mdi/check'
 import MdiArrowLeft from '~icons/mdi/arrow-left'
 import { A } from "@solidjs/router";
+import { shortToFullTeacherName } from "~/utils/teachers";
 
 const Page: Component = () => {
   // Signals for week numbers. We use `-1` as a default value, that should be handled as a loading state.
@@ -243,7 +244,7 @@ const Page: Component = () => {
           {lesson => (
             <div>
               <p>Prise par {group()}</p>
-              <p class="text-sm text-[rgb(120,120,120)]">{lesson().type} avec {lesson().content.teacher}</p>
+              <p class="text-sm text-[rgb(120,120,120)]">{lesson().type} avec {shortToFullTeacherName(lesson().content.teacher)?.name ?? lesson().content.teacher}</p>
 
             </div>
           )}

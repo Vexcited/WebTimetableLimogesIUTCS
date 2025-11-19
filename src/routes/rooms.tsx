@@ -14,14 +14,11 @@ const Page: Component = () => {
   // Signals for week numbers. We use `-1` as a default value, that should be handled as a loading state.
   // Whenever an error is thrown we keep the `-1` value and set the `error()` signal.
   const [currentWeekNumber, setCurrentWeekNumber] = createSignal(-1);
-  const [isCurrentlyInVacation, setCurrentlyInVacation] = createSignal(false);
-  const [error, setError] = createSignal<string | null>(null);
   const [datetime, setDateTime] = createSignal<DateTime>(now());
   const [isSyncedWithNow, setSyncedWithNow] = createSignal(true);
 
   createEffect(on(now, (now) => {
     if (!isSyncedWithNow()) return;
-    console.log("sync with", now);
     setDateTime(now);
   }));
 
@@ -136,9 +133,6 @@ const Page: Component = () => {
    */
   const refreshCurrentWeekNumber = async (): Promise<void> => {
     try {
-      // Reset the vacation state.
-      setCurrentlyInVacation(false);
-
       // We get the current week number using timetables meta.
       const currentWeekNumber = await getDayWeekNumber(datetime(), 1);
 
@@ -163,18 +157,15 @@ const Page: Component = () => {
           refreshTimetableForWeekNumber(2, currentWeekNumber);
           refreshTimetableForWeekNumber(3, currentWeekNumber);
 
-          setCurrentlyInVacation(true);
           setCurrentWeekNumber(currentWeekNumber);
         }
 
         // Otherwise we don't have any cache so let's just let it die.
         setCurrentWeekNumber(-1);
-        setError(error.message);
       }
 
       setCurrentWeekNumber(-1);
       console.error("unhandled:", error);
-      setError("Erreur inconnue(2): voir la console.");
     }
   };
 
@@ -217,21 +208,24 @@ const Page: Component = () => {
     name: string
     lesson?: ITimetableLesson
   }> = (props) => {
-    const group = () => {
-      let year: number;
+    const group = createMemo(() => {
+      let year: number | undefined;
+      if (!props.lesson) return "??";
 
-      if (currentWeekTimetableA1()?.lessons.includes(props.lesson!)) {
+      if (currentWeekTimetableA1()?.lessons.includes(props.lesson)) {
         year = 1;
       }
-      if (currentWeekTimetableA2()?.lessons.includes(props.lesson!)) {
+      else if (currentWeekTimetableA2()?.lessons.includes(props.lesson)) {
         year = 2;
       }
-      if (currentWeekTimetableA3()?.lessons.includes(props.lesson!)) {
+      else if (currentWeekTimetableA3()?.lessons.includes(props.lesson)) {
         year = 3;
       }
 
-      return getLessonGroup(props.lesson!, year!);
-    }
+      if (!year) return "??";
+
+      return getLessonGroup(props.lesson, year);
+    })
 
     return (
       <div class="flex flex-col justify-between sm:max-w-170px h-130px w-full rd-lg px-4 py-3"

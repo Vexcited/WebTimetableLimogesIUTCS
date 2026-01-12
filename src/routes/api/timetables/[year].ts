@@ -1,7 +1,4 @@
-import { type APIEvent } from "@solidjs/start/server";
 import { TimetableYear } from "unilim/iut/cs/timetable";
-import { jsonWithCors } from "~/utils/cors";
-
 import type { ApiTimetableMeta } from "~/types/api";
 
 import {
@@ -9,33 +6,32 @@ import {
   getCachedEntries,
   getCachedTimetable
 } from "~/database";
+import { api } from "satone/server";
+import { t } from "elysia";
 
-export const GET = async ({ params }: APIEvent) => {
-  const year = params.year as TimetableYear;
+export const server = api((app, path) =>
+  app.get(path, async ({ params: { year } }) => {
+    const entries = await getCachedEntries(year);
 
-  if (Object.values(TimetableYear).indexOf(year) === -1) {
-    return jsonWithCors({
-      success: false,
-      message: "Invalid year."
-    }, 400);
-  }
+    await connectDatabase();
+    const timetables = await Promise.all(entries.map(
+      entry => getCachedTimetable(entry)
+    ));
 
-  const entries = await getCachedEntries(year);
+    const metadataOfTimetables: ApiTimetableMeta["data"] = timetables.map(
+      timetable => ({
+        ...timetable.header,
+        last_update: timetable.last_update
+      })
+    );
 
-  await connectDatabase();
-  const timetables = await Promise.all(entries.map(
-    entry => getCachedTimetable(entry)
-  ));
-
-  const metadataOfTimetables: ApiTimetableMeta["data"] = timetables.map(
-    timetable => ({
-      ...timetable.header,
-      last_update: timetable.last_update
+    return {
+      success: true,
+      data: metadataOfTimetables
+    };
+  }, {
+    params: t.Object({
+      year: t.Enum(TimetableYear),
     })
-  );
-
-  return jsonWithCors({
-    success: true,
-    data: metadataOfTimetables
-  }, 200);
-};
+  })
+);

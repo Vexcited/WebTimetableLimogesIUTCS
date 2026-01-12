@@ -55,8 +55,10 @@ const Page: Component = () => {
     ]
   }
 
-  const rooms = createMemo(on([currentWeekTimetableA1, currentWeekTimetableA2, currentWeekTimetableA3], (timetables) => {
-    const rooms: Record<string, Array<ITimetableLesson>> = {
+  type RoomOccupancy = { lesson: ITimetableLesson; year: 1 | 2 | 3 };
+
+  const rooms = createMemo(() => {
+    const rooms: Record<string, Array<RoomOccupancy>> = {
       // RDC
       "R46": [], // = R47 +> 60 seats
       "R52": [], // +> 30 seats
@@ -84,7 +86,13 @@ const Page: Component = () => {
       "AC": [] // +> 120 seats
     };
 
-    for (const timetable of timetables) {
+    const timetables = [
+      { year: 1 as const, timetable: currentWeekTimetableA1() },
+      { year: 2 as const, timetable: currentWeekTimetableA2() },
+      { year: 3 as const, timetable: currentWeekTimetableA3() },
+    ];
+
+    for (const { timetable, year } of timetables) {
       if (!timetable) continue;
 
       for (const lesson of timetable.lessons) {
@@ -111,18 +119,19 @@ const Page: Component = () => {
         else keys.push(room)
 
         for (const room of keys) {
+          const occupancy: RoomOccupancy = { lesson, year };
           if (room in rooms) {
-            rooms[room].push(lesson);
+            rooms[room].push(occupancy);
           }
           else {
-            rooms[room] = [lesson]
+            rooms[room] = [occupancy]
           }
         }
       }
     }
 
     return rooms;
-  }));
+  });
 
   /**
    * Handles the current week number signal, and
@@ -190,15 +199,15 @@ const Page: Component = () => {
   }));
 
   const filtered = createMemo(() => {
-    const filtered: Record<string, ITimetableLesson | undefined> = {};
+    const filtered: Record<string, RoomOccupancy | undefined> = {};
 
     for (const key of Object.keys(rooms())) {
-      const lesson = rooms()[key].find(lesson =>
+      const occupancy = rooms()[key].find(({ lesson }) =>
         datetime().toMillis() >= DateTime.fromISO(lesson.start_date).toMillis()
         && datetime().toMillis() < DateTime.fromISO(lesson.end_date).toMillis()
       )
 
-      filtered[key] = lesson;
+      filtered[key] = occupancy;
     }
 
     return filtered;
@@ -206,46 +215,31 @@ const Page: Component = () => {
 
   const Room: Component<{
     name: string
-    lesson?: ITimetableLesson
+    occupancy?: RoomOccupancy
   }> = (props) => {
     const group = createMemo(() => {
-      let year: number | undefined;
-      if (!props.lesson) return "??";
-
-      if (currentWeekTimetableA1()?.lessons.includes(props.lesson)) {
-        year = 1;
-      }
-      else if (currentWeekTimetableA2()?.lessons.includes(props.lesson)) {
-        year = 2;
-      }
-      else if (currentWeekTimetableA3()?.lessons.includes(props.lesson)) {
-        year = 3;
-      }
-
-      if (!year) return "??";
-
-      return getLessonGroup(props.lesson, year);
+      if (!props.occupancy) return "??";
+      return getLessonGroup(props.occupancy.lesson, props.occupancy.year);
     })
 
     return (
       <div class="flex flex-col justify-between sm:max-w-170px h-130px w-full rd-lg px-4 py-3"
         classList={{
-          "border border-red bg-red/5": !props.lesson,
-          "border border-[rgb(140,140,140)] opacity-75": !!props.lesson
+          "border border-red bg-red/5": !props.occupancy,
+          "border border-[rgb(140,140,140)] opacity-75": !!props.occupancy
         }}
       >
         <p class="text-2xl font-bold">
           {props.name}
         </p>
 
-        <Show when={props.lesson} fallback={
+        <Show when={props.occupancy} fallback={
           <p class="text-red flex items-center gap-2"><MdiCheck/> Disponible</p>
         }>
-          {lesson => (
+          {occupancy => (
             <div>
               <p>Prise par {group()}</p>
-              <p class="text-sm text-[rgb(120,120,120)]">{lesson().type} avec {shortToFullTeacherName(lesson().content.teacher)?.name ?? lesson().content.teacher}</p>
-
+              <p class="text-sm text-[rgb(120,120,120)]">{occupancy().lesson.type} avec {shortToFullTeacherName(occupancy().lesson.content.teacher)?.name ?? occupancy().lesson.content.teacher}</p>
             </div>
           )}
         </Show>
@@ -261,7 +255,7 @@ const Page: Component = () => {
       <h2 class="text-xl font-bold uppercase italic text-center">{props.label}</h2>
       <div class="flex justify-center flex-wrap gap-6">
         <For each={layout[props.layout]}>
-          {(room) => <Room name={room} lesson={filtered()[room]} />}
+          {(room) => <Room name={room} occupancy={filtered()[room]} />}
         </For>
       </div>
     </section>

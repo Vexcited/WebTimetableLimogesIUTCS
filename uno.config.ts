@@ -23,10 +23,5 @@ export default defineConfig({
         "scale-out": "{from{opacity:1;transform:scale(&)}to{opacity:0;transform:scale(0.96)}}"
       }
     }
-  },
-
-  safelist: [
-    "bg-[rgb(18,18,18)]",
-    "font-[Poppins,sans-serif]"
-  ]
+  }
 });

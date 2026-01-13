@@ -1,14 +1,10 @@
-dist
-.solid
-.output
-.vercel
-.vinxi
-
-node_modules
+node_modules/
+.vercel/
+.satone/
+dist/
 
 .DS_Store
 Thumbs.db
-tests/*.json
 
 .env*
 !.env.sample

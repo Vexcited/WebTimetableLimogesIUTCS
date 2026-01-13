@@ -1,8 +1,13 @@
+/* @refresh reload */
 import "@unocss/reset/tailwind.css";
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import "virtual:uno.css";
+
+import { Router } from "@solidjs/router";
+import { FileRoutes } from "satone/client";
+import { render } from "solid-js/web";
 
 import {
   createEffect,
@@ -11,10 +16,8 @@ import {
 } from "solid-js";
 
 import { Meta, MetaProvider } from "@solidjs/meta";
-import { Router } from "@solidjs/router";
 
 import { getUserCustomizationKey } from "~/stores/preferences";
-import { FileRoutes } from "@solidjs/start/router";
 
 import UpdaterModal from "~/components/modals/Updater";
 import LessonModal from "~/components/modals/Lesson";
@@ -22,7 +25,7 @@ import LessonModal from "~/components/modals/Lesson";
 import { initializeNowRefresh } from "~/stores/temporary";
 import { rgbToHex } from "~/utils/colors";
 
-export default function App() {
+render(() => {
   const primaryColor = () => getUserCustomizationKey("primary_color");
   const primaryColorHEX = () => primaryColor()
     .split(",")
@@ -35,19 +38,17 @@ export default function App() {
   });
 
   return (
-    <Router
-      root={(props) => (
-        <MetaProvider>
-          <Meta name="theme-color" content={rgbToHex(...primaryColorHEX())} />
+    <Router root={(props) =>
+      <MetaProvider>
+        <Meta name="theme-color" content={rgbToHex(...primaryColorHEX())} />
 
-          <UpdaterModal />
-          <LessonModal />
+        <UpdaterModal />
+        <LessonModal />
 
-          <Suspense>{props.children}</Suspense>
-        </MetaProvider>
-      )}
-    >
+        <Suspense>{props.children}</Suspense>
+      </MetaProvider>
+    }>
       <FileRoutes />
     </Router>
   );
-}
+}, document.getElementById("root") as HTMLElement);

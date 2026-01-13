@@ -30,7 +30,7 @@
     "localforage": "^1.10.0",
     "luxon": "^3.7.2",
     "mongoose": "^9.1.3",
-    "satone": "0.0.12",
+    "satone": "^0.0.13",
     "solid-js": "^1.9.10",
     "swiper": "^12.0.3",
     "unilim": "1.1.0"

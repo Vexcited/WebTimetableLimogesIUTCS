@@ -10,7 +10,7 @@ import { api } from "satone/server";
 import { t } from "elysia";
 
 export const server = api((app, path) =>
-  app.get(path, async ({ params: { year } }) => {
+  app.get(path, async ({ params: { year }, status }) => {
     const entries = await getCachedEntries(year);
 
     await connectDatabase();
@@ -25,13 +25,19 @@ export const server = api((app, path) =>
       })
     );
 
-    return {
+    return status(200, {
       success: true,
       data: metadataOfTimetables
-    };
+    });
   }, {
+    detail: {
+      summary: "Known timetables for year",
+      description: "Retrieve all the known timetables headers for the given year."
+    },
     params: t.Object({
-      year: t.Enum(TimetableYear),
-    })
+      year: t.Enum(TimetableYear, {
+        description: "Year to retrieve timetables for."
+      }),
+    }),
   })
 );

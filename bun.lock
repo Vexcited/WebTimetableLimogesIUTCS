@@ -12,7 +12,6 @@
         "@solidjs/meta": "^0.29.4",
         "@solidjs/router": "^0.15.4",
         "@thednp/solid-color-picker": "^0.0.14",
-        "@unocss/reset": "^66.5.12",
         "elysia": "^1.4.21",
         "ics": "^3.8.1",
         "localforage": "^1.10.0",

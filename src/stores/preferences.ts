@@ -2,15 +2,21 @@ import { createStore } from "solid-js/store";
 import { textColorOnCustomBackground } from "~/utils/colors";
 import { getYearFromMainGroup } from "~/utils/groups";
 import { safelyGetInLocalStorage } from "~/utils/localstorage";
+import { createPrefersDark } from "@solid-primitives/media";
+
+type Theme = "system" | "dark" | "light";
 
 interface UserCustomization {
   primary_color?: string
   use_fixed_height?: boolean
+  theme: Theme
 }
+const prefersDark = createPrefersDark();
 
 export const DEFAULT_USER_CUSTOMIZATION: Required<UserCustomization> = {
   primary_color: "255, 66, 66",
-  use_fixed_height: false
+  use_fixed_height: false,
+  theme: "system"
 };
 
 export const [preferences, setPreferences] = createStore({
@@ -45,3 +51,14 @@ export const getUserCustomizationKey = <T extends keyof UserCustomization>(key: 
 };
 
 export const textColorOnBG = (reversed = false) => textColorOnCustomBackground(getUserCustomizationKey("primary_color"), reversed);
+
+export const themeKey = (): "dark" | "light" => {
+  const theme = getUserCustomizationKey('theme')
+
+  if (theme === "system") {
+    if (prefersDark()) return "dark";
+    else return "light"
+  }
+
+  return theme;
+}

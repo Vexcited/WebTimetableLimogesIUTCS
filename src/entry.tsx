@@ -1,5 +1,4 @@
 /* @refresh reload */
-import "@unocss/reset/tailwind.css";
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
@@ -17,7 +16,7 @@ import {
 
 import { Meta, MetaProvider } from "@solidjs/meta";
 
-import { getUserCustomizationKey } from "~/stores/preferences";
+import { getUserCustomizationKey, themeKey } from "~/stores/preferences";
 
 import UpdaterModal from "~/components/modals/Updater";
 import LessonModal from "~/components/modals/Lesson";
@@ -35,6 +34,13 @@ render(() => {
   createEffect(() => {
     const root = document.querySelector(':root') as HTMLElement;
     root.style.setProperty('--custom-color', primaryColor());
+
+    const theme = themeKey();
+
+    if (theme === "dark")
+      document.documentElement.classList.add("dark")
+    else
+      document.documentElement.classList.remove("dark")
   });
 
   return (

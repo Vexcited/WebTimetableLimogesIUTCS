@@ -1,16 +1,16 @@
-import { defineConfig, presetWind3, transformerVariantGroup } from "unocss";
+import { defineConfig, presetWind4, transformerVariantGroup } from "unocss";
 import { presetKobalte } from "unocss-preset-primitives";
 
 export default defineConfig({
-  presets: [presetWind3(), presetKobalte()],
+  presets: [presetWind4({ dark: 'class' }), presetKobalte()],
   transformers: [transformerVariantGroup()],
 
   theme: {
     colors: {
-      red: "rgba(var(--custom-color), %alpha)"
+      red: "rgb(var(--custom-color))"
     },
 
-    breakpoints: {
+    breakpoint: {
       sm: "436px",
       tablet: "768px",
       "laptop-sm": "1024px",

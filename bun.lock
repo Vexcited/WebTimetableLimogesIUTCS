@@ -18,7 +18,7 @@
         "localforage": "^1.10.0",
         "luxon": "^3.7.2",
         "mongoose": "^9.1.4",
-        "satone": "^0.0.15",
+        "satone": "^0.0.16",
         "solid-js": "^1.9.10",
         "swiper": "^12.0.3",
         "unilim": "^2.0.1",
@@ -1359,7 +1359,7 @@
 
     "safer-buffer": ["safer-buffer@2.1.2", "", {}, "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="],
 
-    "satone": ["satone@0.0.15", "", { "dependencies": { "@babel/generator": "^7.28.6", "@babel/parser": "^7.28.6", "@babel/traverse": "^7.28.6", "@babel/types": "^7.28.6", "@elysiajs/eden": "^1.4.6", "@elysiajs/openapi": "^1.4.13", "@elysiajs/static": "^1.4.7", "bun-plugin-dtsx": "^0.9.9", "elysia": "^1.4.21", "vite": "7.3.1", "vite-plugin-pages": "^0.33.2", "vite-plugin-solid": "^2.11.10", "vite-tsconfig-paths": "^6.0.4" }, "bin": { "satone": "src/cli.ts" } }, "sha512-zydkwG0+TMDK0p0eiJ4rVM1D3ld4GjBipDV5xGIU9joYsB4uLQDeqZj8AvKtcgDrFB5ej4Ccqm09T9QaiGh8jA=="],
+    "satone": ["satone@0.0.16", "", { "dependencies": { "@babel/generator": "^7.28.6", "@babel/parser": "^7.28.6", "@babel/traverse": "^7.28.6", "@babel/types": "^7.28.6", "@elysiajs/eden": "^1.4.6", "@elysiajs/openapi": "^1.4.13", "@elysiajs/static": "^1.4.7", "bun-plugin-dtsx": "^0.9.9", "elysia": "^1.4.22", "vite": "7.3.1", "vite-plugin-pages": "^0.33.2", "vite-plugin-solid": "^2.11.10", "vite-tsconfig-paths": "^6.0.4" }, "bin": { "satone": "src/cli.ts" } }, "sha512-H/+Noz5SVcLjFybU/CsWoeffh/I1MFWBTo5cOK4RyDkne2V1OUVBig8YPeZBklfDVg1iUeN6zACvvUFF9WDbOQ=="],
 
     "scheduler": ["scheduler@0.27.0", "", {}, "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q=="],
 
@@ -1794,8 +1794,6 @@
     "@react-native/codegen/glob/minimatch": ["minimatch@3.1.2", "", { "dependencies": { "brace-expansion": "^1.1.7" } }, "sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw=="],
 
     "@rollup/plugin-node-resolve/@rollup/pluginutils/estree-walker": ["estree-walker@2.0.2", "", {}, "sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w=="],
-
-    "@unocss/transformer-attributify-jsx/@babel/traverse/@babel/parser": ["@babel/parser@7.28.6", "", { "dependencies": { "@babel/types": "^7.28.6" }, "bin": "./bin/babel-parser.js" }, "sha512-TeR9zWR18BvbfPmGbLampPMW+uW1NZnJlRuuHso8i87QZNq2JRF9i6RgxRqtEq+wQGsS19NNTWr2duhnE49mfQ=="],
 
     "cliui/string-width/emoji-regex": ["emoji-regex@8.0.0", "", {}, "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="],
 

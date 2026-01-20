@@ -102,6 +102,10 @@ export const initials = {
   "GS": {
     name: "Grégory SIMONNE",
     email: "gregory.simonne@unilim.fr"
+  },
+  "GK": {
+    name: "Karim GASMI",
+    email: "karim@pixul.fr"
   }
 } as Record<string, Teacher>
 
